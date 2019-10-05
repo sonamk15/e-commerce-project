@@ -97,4 +97,4 @@ require('./routes/customer.js')(customer, knex, jwt,config);
 
 
 
-app.listen(4000,()=> console.log('server is listening ..port 3000........'));
+app.listen(4000,()=> console.log('server is listening ..port 4000........'));

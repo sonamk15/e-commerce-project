@@ -1,10 +1,12 @@
 module.exports = function(product,knex){
-product.get('/products',(re,res,next)=>{
+product.get('/products',(req,res,next)=>{
     knex('product').then((data)=>{
         console.log(data);
         res.send(data)
     })
 })
+
+
 
 product.get('/products/:search_value',(req,res,next)=>{
     var search_value  = req.params.search_value;
@@ -15,13 +17,25 @@ product.get('/products/:search_value',(req,res,next)=>{
     })}
 })
 
-product.get('/products/:product_id',(req,res,next)=>{
+product.get('/product/:product_id',(req,res,next)=>{
     var product_id = parseInt(req.params.product_id)
     knex.select('*').from('product').where(product_id,product_id).then((data)=>{
         
         res.send(data[product_id-1])
     })
 })
+
+//  pagenation
+product.get('/pagenation/:page_no',(req,res,next)=>{
+    var page_no = parseInt(req.params.page_no);
+    knex('product').then((data)=>{
+        var pageData = data.slice(3*(page_no-1),3*page_no)
+        res.send(pageData)
+    })
+})
+
+
+
 
 
 product.get('/products/inCategory/:category_id',(req,res,next)=>{
