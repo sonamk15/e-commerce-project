@@ -27,13 +27,14 @@ product.get('/product/:product_id',(req,res,next)=>{
 
 //  pagenation
 product.get('/pagenation/:page_no',(req,res,next)=>{
+    var perPage = req.query.perPage
+    var price = req.query.price
     var page_no = parseInt(req.params.page_no);
-    knex('product').then((data)=>{
-        var pageData = data.slice(3*(page_no-1),3*page_no)
+    knex.select('*').from('product').where('price','<',price).then((data)=>{
+        var pageData = data.slice(perPage*(page_no-1),perPage*page_no)
         res.send(pageData)
     })
 })
-
 
 
 
@@ -84,3 +85,15 @@ product.post('/products/:product_id/reviews', (req, res, next) => {
 });
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
